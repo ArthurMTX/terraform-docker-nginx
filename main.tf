@@ -22,6 +22,12 @@ resource "docker_container" "nginx" {
   memory     = var.container_memory
   privileged = var.privileged
 
+  command = [
+    "sh",
+    "-c",
+    "echo $(hostname) > /usr/share/nginx/html/index.html && nginx -g 'daemon off;'"
+  ]
+
   ports {
     internal = 80
     external = var.port_start + count.index
